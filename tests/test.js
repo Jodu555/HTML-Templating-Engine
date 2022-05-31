@@ -1,19 +1,22 @@
+const path = require('path');
+
+
 const http = require('http');
 const express = require('express');
 const https = require('https');
 const cors = require('cors');
 const morgan = require('morgan');
-const helmet = require('helmet');
 const dotenv = require('dotenv').config();
 const templatingEngine = require('../src/index');
 
 const app = express();
 app.use(cors());
 app.use(morgan('dev'));
-app.use(helmet());
 app.use(express.json());
 
-app.use(templatingEngine());
+app.use(templatingEngine({
+    path: path.join(process.cwd(), 'templates'),
+}));
 
 let server;
 if (process.env.https) {
@@ -32,5 +35,5 @@ if (process.env.https) {
 
 const PORT = process.env.PORT || 3100;
 server.listen(PORT, () => {
-    console.log(`Express App Listening ${process.env.https ? 'with SSL ' : ''}on `);
+    console.log(`Express App Listening ${process.env.https ? 'with SSL ' : ''}on ${PORT}`);
 });
