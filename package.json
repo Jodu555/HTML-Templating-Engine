@@ -1,0 +1,20 @@
+{
+	"name": "html-templating-engine",
+	"version": "1.0.0",
+	"description": "I've decided to write my Own HTML Templating Engine so i get a bit familiar and know what to do in other projects",
+	"main": "index.js",
+	"scripts": {
+		"test": "npm run tests/test.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Jodu555/HTML-Templating-Engine.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Jodu555/HTML-Templating-Engine/issues"
+	},
+	"homepage": "https://github.com/Jodu555/HTML-Templating-Engine#readme"
+}
