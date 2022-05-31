@@ -1,7 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 
+let tmpPath = '';
+let includePath = '';
+
 const fileParser = (data) => {
+    let output = '';
     data.split('\r\n').forEach(line => {
         line.split(' ').forEach(word => {
             word = word.trim();
@@ -9,24 +13,28 @@ const fileParser = (data) => {
                 const key = word.replace('$$', '').split('"')[0]
                 const target = word.split('"')[1]
                 if (key == 'include') {
-                    console.log('Try to include' + target);
+                    const inclData = fs.readFileSync(path.join(tmpPath, target), 'utf-8');
+                    output += inclData;
                 }
                 console.log({ word, key, target });
-
+            } else {
+                output += word + ' ';
             }
         });
     });
 
-    return data;
+    return output;
 }
 
 
 module.exports = (opts) => {
-    const tmpPath = opts.path;
+    opts.path == undefined ? tmpPath = process.cwd() : tmpPath = opts.path;
+    opts.includePath == undefined ? includePath = tmpPath : includePath = opts.includePath;
+
     return (req, res, next) => {
         let searchPath = req.path;
         if (searchPath.endsWith('/'))
-            searchPath += 'index.html'
+            searchPath += 'index.html';
 
         const reqFile = path.join(tmpPath, searchPath);
 
